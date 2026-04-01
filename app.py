@@ -1,5 +1,6 @@
 import streamlit as st
 from textblob import TextBlob
+import plotly.graph_objects as go
 
 # Sidebar
 st.sidebar.header("Dashboard Controls")
@@ -27,3 +28,24 @@ if user_text:
     col1, col2, col3 = st.columns([2, 1, 1])
     with col1:
         st.metric("Polarity Score" f"{pol:.2f}")
+    with col2:
+        st.metric("Subjectivity", f"{subj:.2f}")
+
+    with col3:
+        if pol > 0:
+            label = "Positive"
+        elif pol < 0:
+            label = "Negative"
+        else:
+            label = "Neutral"
+        st.write(f"**Result:**{label}")
+    st.divider()
+    # Gauge
+    fig = go.Figure(go.Indicator(
+        mode = "gauge+number",
+        value = pol,
+        title = {'text': "Sentiment Visualizer"},
+        gauge = {'axis': {'range': [-1, 1]}}
+    ))
+
+    st.plotly_chart(fig, use_container_width=True)
