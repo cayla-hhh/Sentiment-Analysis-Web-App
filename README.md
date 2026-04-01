@@ -7,10 +7,10 @@ A high-performance web application that performs real-time sentiment analysis us
 * **Resource Caching:** Utilizes Streamlit's `@st.cache_resource` for optimized model loading.
 
 ##  Technical Stack
-* **Frontend:** Streamlit 🎈
-* **Machine Learning:** PyTorch, Transformers (DistilBERT), TextBlob 🧠
-* **Data Science:** Pandas, Plotly 📊
-* **Environment:** Python 3.12 Virtual Environment (venv) 🫧
+* **Frontend:** Streamlit 
+* **Machine Learning:** PyTorch, Transformers (DistilBERT), TextBlob 
+* **Data Science:** Pandas, Plotly 
+* **Environment:** Python 3.12 Virtual Environment (venv) 
 
 ## Quick Start
 
