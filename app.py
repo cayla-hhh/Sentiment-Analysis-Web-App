@@ -8,6 +8,8 @@ from transformers import pipeline
 def load_hf_pipeline():
     return pipeline("sentiment-analysis")
 
+classifier = load_hf_pipeline()
+
 # Sidebar
 st.sidebar.header("Dashboard Controls")
 
@@ -26,7 +28,6 @@ if user_text:
         pol = blob.sentiment.polarity
         subj = blob.sentiment.subjectivity
     else:        
-        classifier = load_hf_pipeline()
         result = classifier(user_text)[0]
 
         if result['label'] == 'POSITIVE':
@@ -49,7 +50,7 @@ if user_text:
             label = "Negative"
         else:
             label = "Neutral"
-        st.write(f"**Result:**{label}")
+        st.write(f"**Result:** {label}")
     st.divider()
     
     # Gauge
@@ -71,9 +72,17 @@ if uploaded_file is not None:
     column_to_analyze = st.selectbox("Select the column containing text:", df.columns)
 
     if st.button("Run Batch Analysis"):
-        df['Polarity'] = df[column_to_analyze].apply(lambda x: TextBlob(str(x)).sentiment.polarity)
+        if model_choice == "TextBlob (Fast)":
+            df['Polarity'] = df[column_to_analyze].apply(lambda x: TextBlob(str(x)).sentiment.polarity)
+        else:
+            def get_hf_sentiment(text):
+                result = classifier(str(text))[0]
+                val = result['score']
+                return val if result['label'] == 'POSITIVE' else -val
+            
+            df['Polarity'] = df[column_to_analyze].apply(get_hf_sentiment)
+        
 
         avg_polarity = df['Polarity'].mean()
         st.metric("Average Batch Sentiment", f"{avg_polarity:.2f}")
-
         st.dataframe(df)
