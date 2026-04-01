@@ -2,6 +2,11 @@ import streamlit as st
 from textblob import TextBlob
 import plotly.graph_objects as go
 import pandas as pd
+from transformers import pipeline
+
+@st.cache_resource
+def load_hf_pipeline():
+    return pipeline("sentiment-analysis")
 
 # Sidebar
 st.sidebar.header("Dashboard Controls")
@@ -20,15 +25,20 @@ if user_text:
         blob = TextBlob(user_text)
         pol = blob.sentiment.polarity
         subj = blob.sentiment.subjectivity
-    else:
-        # Placeholder
-        pol = 0.5
+    else:        
+        classifier = load_hf_pipeline()
+        result = classifier(user_text)[0]
+
+        if result['label'] == 'POSITIVE':
+            pol = result['score']
+        else:
+            pol = -result['score']
+        
         subj = 0.5
-        st.warning("HuggingFace model coming soon")
 
     col1, col2, col3 = st.columns([2, 1, 1])
     with col1:
-        st.metric("Polarity Score" f"{pol:.2f}")
+        st.metric("Polarity Score", f"{pol:.2f}")
     with col2:
         st.metric("Subjectivity", f"{subj:.2f}")
 
@@ -41,6 +51,7 @@ if user_text:
             label = "Neutral"
         st.write(f"**Result:**{label}")
     st.divider()
+    
     # Gauge
     fig = go.Figure(go.Indicator(
         mode = "gauge+number",
