@@ -1,21 +1,22 @@
 import streamlit as st
 from textblob import TextBlob
 
+# Sidebar
+st.sidebar.header("Dashboard Controls")
 
-st.title("Sentiment Analysis Dashboard")
+model_choice = st.sidebar.selectbox("Choose Analysis Engine:", ["TextBlob (Fast)", "HuggingFace (Advanced)"])
 
-user_text = st.text_input("Enter some text to analyze:")
+uploaded_file = st.sidebar.file_uploader("Batch Process CSV", type=["csv"])
+
+# Main Content
+st.title("AI Sentiment Dashboard")
+
+user_text = st.text_area("Analyze specific text:", placeholder="Enter a sentence here...")
 
 if user_text:
     blob = TextBlob(user_text)
-    score = blob.sentiment.polarity
 
-    if score > 0:
-        label = "Positive"
-    elif score < 0:
-        label = "Negative"
-    else:
-        label = "Neutral"
+    pol = blob.sentiment.polarity
+    subj = blob.sentiment.subjectivity
 
-st.subheader(f"Sentiment: {label}")
-st.write(f"Confidence Score: {score}")
+    col1, col2, col3 = st.columns([2, 1, 1])
