@@ -1,6 +1,7 @@
 import streamlit as st
 from textblob import TextBlob
 import plotly.graph_objects as go
+import pandas as pd
 
 # Sidebar
 st.sidebar.header("Dashboard Controls")
@@ -49,3 +50,19 @@ if user_text:
     ))
 
     st.plotly_chart(fig, use_container_width=True)
+
+if uploaded_file is not None:
+    st.divider()
+    st.header('Batch Analysis Mode')
+
+    df = pd.read_csv(uploaded_file)
+
+    column_to_analyze = st.selectbox("Select the column containing text:", df.columns)
+
+    if st.button("Run Batch Analysis"):
+        df['Polarity'] = df[column_to_analyze].apply(lambda x: TextBlob(str(x)).sentiment.polarity)
+
+        avg_polarity = df['Polarity'].mean()
+        st.metric("Average Batch Sentiment", f"{avg_polarity:.2f}")
+
+        st.dataframe(df)
