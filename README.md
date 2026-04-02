@@ -19,7 +19,7 @@ A high-performance web application that performs real-time sentiment analysis us
     cd sentiment-analysis-app
 
 ### 2. Set Up the Environment
-# Create and activate the virtual environment
+### Create and activate the virtual environment
     python -m venv .venv
 
     .\.venv\Scripts\activate
