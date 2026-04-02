@@ -1,31 +1,43 @@
-# AI Sentiment Analysis Dashboard
-A high-performance web application that performs real-time sentiment analysis using both rule-based and deep-learning AI models.
+# Sentiment Analysis Dashboard
 
-##  Key Features
-* **Dual-Engine Analysis:** Compare results between **TextBlob** (Linguistic rules) and **HuggingFace Transformers** (Contextual Deep Learning).
-* **Batch Processing:** Upload CSV files for large-scale data analysis with automated visualization.
-* **Resource Caching:** Utilizes Streamlit's `@st.cache_resource` for optimized model loading.
+A web application designed to perform real-time sentiment analysis and compare rule-based and deep-learning approaches.
 
-##  Technical Stack
-* **Frontend:** Streamlit 
-* **Machine Learning:** PyTorch, Transformers (DistilBERT), TextBlob 
-* **Data Science:** Pandas, Plotly 
-* **Environment:** Python 3.12 Virtual Environment (venv) 
+# Features
 
-## Quick Start
+## Dual-model comparison
+Sentiment analysis is performed using both TextBlob (rule-based) and a HuggingFace Transformers model (DistilBERT), allowing direct comparison of results from linguistic rules and contextual deep learning.
 
-### 1. Clone the Repository
-    git clone https://github.com/cayla-hhh/Sentiment-Analysis-Web-App.git
-    cd sentiment-analysis-app
+## Batch dataset processing
+CSV files can be uploaded to run sentiment analysis on large datasets, with automated charts generated to visualize overall trends and results.
 
-### 2. Set Up the Environment
-### Create and activate the virtual environment
-    python -m venv .venv
+## Optimized performance
+Model loading is cached using Streamlit to reduce startup time and improve overall responsiveness.
 
-    .\.venv\Scripts\activate
+# Tech Stack
+Frontend: Streamlit
 
-### 3. Install Dependencies
-    pip install -r requirements.txt
+Machine Learning: PyTorch, HuggingFace Transformers (DistilBERT), TextBlob
 
-### 4. Run the App
-    streamlit run app.py
+Data Analysis & Visualization: Pandas, Plotly
+
+Environment: Python 3.12 virtual environment (venv)
+## Setup Instructions
+
+1. Clone the repository
+
+        git clone https://github.com/cayla-hhh/Sentiment-Analysis-Web-App.git
+        cd sentiment-analysis-app
+
+2. Create and activate a virtual environment
+
+        python -m venv .venv
+
+       .\.venv\Scripts\activate
+
+4. Install dependencies
+
+        pip install -r requirements.txt
+
+4. Run the application
+
+        streamlit run app.py
